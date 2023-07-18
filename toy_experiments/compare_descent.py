@@ -4,7 +4,7 @@ from problems.toy_biobjective import concave_fun_eval, create_pf, circle_points
 from solvers import epo_search
 
 import matplotlib.pyplot as plt
-from latex_utils import latexify
+# from latex_utils import latexify
 
 if __name__ == '__main__':
     K = 4       # Number of trajectories
@@ -14,7 +14,7 @@ if __name__ == '__main__':
     x0 = np.zeros(n)
     x0[range(0, n, 2)] = 0.3
     x0[range(1, n, 2)] = -.3
-    latexify(fig_width=2., fig_height=1.8)
+    # latexify(fig_width=2., fig_height=1.8)
     l0, _ = concave_fun_eval(x0)
     max_iters = 70
     ss = 0.1

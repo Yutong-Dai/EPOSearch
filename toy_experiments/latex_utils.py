@@ -37,12 +37,14 @@ def latexify(fig_width=None, fig_height=None, columns=1):
         fig_height = MAX_HEIGHT_INCHES
     # , '\usepackage{amsmath, amsfonts}',
     params = {'backend': 'pdf',
-              'text.latex.preamble': [r'\usepackage{amsmath}',
-                                      r'\usepackage{amssymb}',
-                                      r'\usepackage{gensymb}',
+              'text.latex.preamble': r"\usepackage{amsmath} \usepackage{amssymb} \usepackage{gensymb} \usepackage{amsfonts} \usepackage{newtxmath}",
                                       # r'\usepackage{mathabx}',
-                                      r'\usepackage{amsfonts}',
-                                      r'\usepackage{newtxmath}'],
+                                    # [r'\usepackage{amsmath}',
+                                    #   r'\usepackage{amssymb}',
+                                    #   r'\usepackage{gensymb}',
+                                    #   # r'\usepackage{mathabx}',
+                                    #   r'\usepackage{amsfonts}',
+                                    #   r'\usepackage{newtxmath}'],
               'axes.labelsize': 8,  # fontsize for x and y labels (was 10)
               'axes.titlesize': 9,
               'font.size': 10,   # was 10

@@ -1,3 +1,20 @@
+'''
+# File: toy_biobjective_yd.py
+# Project: problems
+# Created Date: 2023-07-17 4:29
+# Author: Yutong Dai yutongdai95@gmail.com
+# -----
+# Last Modified: 2023-07-17 4:29
+# Modified By: Yutong Dai yutongdai95@gmail.com
+# 
+# This code is published under the MIT License.
+# -----
+# HISTORY:
+# Date      	By 	Comments
+# ----------	---	----------------------------------------------------------
+'''
+
+
 import autograd.numpy as np
 from autograd import grad
 
@@ -8,27 +25,27 @@ from latex_utils import latexify
 
 
 def f1(x):
-    n = len(x)
+    n = 1#len(x)
     dx = np.linalg.norm(x - 1. / np.sqrt(n))
     return 1 - np.exp(-dx**2)
 
 
 def f2(x):
-    n = len(x)
+    n = 1 #len(x)
     dx = np.linalg.norm(x + 1. / np.sqrt(n))
     return 1 - np.exp(-dx**2)
 
 
 # calculate the gradients using autograd
-f1_dx = grad(f1)
-f2_dx = grad(f2)
+# f1_dx = grad(f1)
+# f2_dx = grad(f2)
 
 
 def concave_fun_eval(x):
     """
     return the function values and gradient values
     """
-    return np.stack([f1(x), f2(x)]), np.stack([f1_dx(x), f2_dx(x)])
+    return np.stack([f1(x), f2(x)]), None#np.stack([f1_dx(x), f2_dx(x)])
 
 
 # ### create the ground truth Pareto front ###
@@ -47,18 +64,18 @@ def create_pf(side_nonpf=False):
         return np.array(fs)
 
     if side_nonpf:
-        ps = np.linspace(-1. / np.sqrt(2), 1. / np.sqrt(2), 30, endpoint=True)
+        ps = np.linspace(-1. , 1., 30, endpoint=True)
     else:
-        ps = np.linspace(-1 / np.sqrt(2), 1 / np.sqrt(2))
+        ps = np.linspace(-1 , 1 )
 
     pf = map_to_objective_space(ps)
 
     if side_nonpf:
-        s_left = np.linspace(-1.5 / np.sqrt(2), -1. / np.sqrt(2), 10,
+        s_left = np.linspace(-3 , -1. , 10,
                              endpoint=True)
         fs_left = map_to_objective_space(s_left)
 
-        s_right = np.linspace(1. / np.sqrt(2), 1.5 / np.sqrt(2), 10,
+        s_right = np.linspace(1. , 3 , 10,
                               endpoint=True)
         fs_right = map_to_objective_space(s_right)
 
