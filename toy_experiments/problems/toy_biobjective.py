@@ -104,7 +104,7 @@ if __name__ == '__main__':
     l1 = [f1(np.array([x])) for x in theta]
     l2 = [f2(np.array([x])) for x in theta]
 
-    latexify(fig_width=2.25, fig_height=1.8)
+    # latexify(fig_width=2.25, fig_height=1.8)
     fig, ax = plt.subplots()
     fig.subplots_adjust(left=0.025, bottom=.12, right=.975, top=.975)
     ax.spines['left'].set_position('zero')
@@ -127,7 +127,7 @@ if __name__ == '__main__':
                  r"\preccurlyeq \mathbf{1}/\sqrt{n}$", side="both")
     axt.legend(loc=(0.09, 0.2))
 
-    labelLines(ax.get_lines(), xvals=[2, -2], align=False)
+    # labelLines(ax.get_lines(), xvals=[2, -2], align=False)
     ax.set_xlabel(r'$\theta$')
     ax.xaxis.set_label_coords(0.99, -0.03)
 

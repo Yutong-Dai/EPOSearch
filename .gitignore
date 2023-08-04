@@ -134,5 +134,4 @@ dmypy.json
 misc/
 
 # outputs
-*.pdf
 .history/*

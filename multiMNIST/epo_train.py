@@ -6,7 +6,7 @@ import torch.utils.data
 from torch.autograd import Variable
 
 from model_lenet import RegressionModel, RegressionTrain
-from model_resnet import MnistResNet, RegressionTrainResNet
+# from model_resnet import MnistResNet, RegressionTrainResNet
 
 from epo_lp import EPO_LP
 from time import time
@@ -122,17 +122,19 @@ def train(dataset, base_model, niter, preference):
             grads = {}
             losses = []
             for i in range(n_tasks):
-                optimizer.zero_grad()
-                task_loss = model(X, ts)
-                losses.append(task_loss[i].data.cpu().numpy())
-                task_loss[i].backward()
+                optimizer.zero_grad(set_to_none=True)
+                model.zero_grad(set_to_none=True)
+                task_loss = model(X, ts, i)
+                losses.append(task_loss.data.cpu().numpy())
+                task_loss.backward()
 
                 # One can use scalable method proposed in the MOO-MTL paper 
                 # for large scale problem; but we use the gradient
                 # of all parameters in this experiment.
                 grads[i] = []
-                for param in model.parameters():
+                for name, param in model.named_parameters():
                     if param.grad is not None:
+                        # print(i, name, param.grad.data.shape)
                         grads[i].append(Variable(param.grad.data.clone().flatten(), requires_grad=False))
 
             grads_list = [torch.cat(grads[i]) for i in range(len(grads))]
@@ -162,6 +164,7 @@ def train(dataset, base_model, niter, preference):
             weighted_loss = torch.sum(task_losses * alpha)  # * 5. * max(epo_lp.mu_rl, 0.2)
             weighted_loss.backward()
             optimizer.step()
+        print(alpha)
 
         print(f"\tdescent={descent/len(train_loader)}")
         if n_manual_adjusts > 0:
@@ -247,8 +250,8 @@ def run(dataset='mnist', base_model='lenet', niter=100, npref=5):
 
 
 run(dataset='mnist', base_model='lenet', niter=100, npref=5)
-run(dataset='fashion', base_model='lenet', niter=100, npref=5)
-run(dataset='fashion_and_mnist', base_model='lenet', niter=100, npref=5)
+# run(dataset='fashion', base_model='lenet', niter=100, npref=5)
+# run(dataset='fashion_and_mnist', base_model='lenet', niter=100, npref=5)
 
 # run(dataset = 'mnist', base_model = 'resnet18', niter = 20, npref = 5)
 # run(dataset = 'fashion', base_model = 'resnet18', niter = 20, npref = 5)
